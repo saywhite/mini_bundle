@@ -2,7 +2,7 @@
 Minimal Dear ImGui Bundle
 
 Based on Pthom's excellent ImGui Bundle
-(https://github.com/pthom/mini_bundle)
+(https://github.com/pthom/imgui_bundle)
 
 Includes:
 - ImGui
