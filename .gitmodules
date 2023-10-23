@@ -1,0 +1,12 @@
+[submodule "external/glfw/glfw"]
+	path = external/glfw/glfw
+	url = https://github.com/glfw/glfw.git
+	branch = 3.3-stable
+[submodule "external/implot/implot"]
+	path = external/implot/implot
+	url = https://github.com/epezent/implot.git
+	branch = master
+[submodule "external/imgui/imgui"]
+	path = external/imgui/imgui
+	url = https://github.com/saywhite/imgui.git
+	branch = docking
