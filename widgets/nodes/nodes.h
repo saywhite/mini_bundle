@@ -318,7 +318,7 @@ namespace ImGui
 
 			const ImVec2 outline(4.0f * scale, 4.0f * scale);
 
-			const ImDrawFlags rounding_corners_flags = ImDrawCornerFlags_All;
+			const ImDrawFlags rounding_corners_flags = ImDrawFlags_RoundCornersAll;
 
 			if (state_ & ImGuiNodesNodeStateFlag_Disabled)
 			{
@@ -338,7 +338,7 @@ namespace ImGui
 			if (false == (state_ & ImGuiNodesNodeStateFlag_Collapsed))
 				draw_list->AddLine(ImVec2(node_rect.Min.x, head.y), ImVec2(head.x - 1.0f, head.y), ImColor(0.0f, 0.0f, 0.0f, 0.5f), 2.0f);
 		
-			const ImDrawFlags head_corners_flags = state_ & ImGuiNodesNodeStateFlag_Collapsed ? rounding_corners_flags : ImDrawCornerFlags_Top;
+			const ImDrawFlags head_corners_flags = state_ & ImGuiNodesNodeStateFlag_Collapsed ? rounding_corners_flags : ImDrawFlags_RoundCornersTop;
 			draw_list->AddRectFilled(node_rect.Min, head, head_color, rounding, head_corners_flags);	
 
 			////////////////////////////////////////////////////////////////////////////////
@@ -443,6 +443,19 @@ namespace ImGui
 	};
 
 	//TODO: ImVector me
+	/*
+		If the number of initializer clauses is less than the number of members and bases (since C++17) or initializer list is completely empty, 
+		the remaining members and bases (since C++17) are initialized by their default member initializers, if provided in the class definition, 
+		and otherwise (since C++14) copy-initialized from empty lists, in accordance with the usual list-initialization rules (which performs 
+		value-initialization for non-class types and 
+		non-aggregate classes with default constructors, and 
+		aggregate initialization for aggregates).
+	*/
+	/*
+    inline ImVector()                                       { Size = Capacity = 0; Data = NULL; }
+    inline ImVector(const ImVector<T>& src)                 { Size = Capacity = 0; Data = NULL; operator=(src); }
+    inline ImVector<T>& operator=(const ImVector<T>& src)   { clear(); resize(src.Size); if (src.Data) memcpy(Data, src.Data, (size_t)Size * sizeof(T)); return *this; }
+	*/
 	struct ImGuiNodesNodeDesc
 	{
 		char name_[ImGuiNodesNamesMaxLen];
@@ -498,7 +511,7 @@ namespace ImGui
 			p2 += (ImVec2(-line, 0.0f) * scale_);
 			p3 += (ImVec2(+line, 0.0f) * scale_);
 
-			draw_list->AddBezierCurve(p1, p2, p3, p4, color, 1.5f * scale_);
+			draw_list->AddBezierCubic(p1, p2, p3, p4, color, 1.5f * scale_);
 		}
 
 		inline bool ConnectionMatrix(ImGuiNodesNode* input_node, ImGuiNodesNode* output_node, ImGuiNodesInput* input, ImGuiNodesOutput* output)
@@ -535,6 +548,7 @@ namespace ImGui
 			////////////////////////////////////////////////////////////////////////////////
 
 			{
+				// in ths case, inputs_ and outputs_ should been copy-initialized by their default constructors
 				ImGuiNodesNodeDesc desc("Test", ImGuiNodesNodeType_Generic, ImColor(0.2, 0.3, 0.6, 0.0f));
 				nodes_desc_.push_back(desc);
 			
