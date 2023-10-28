@@ -5,7 +5,10 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE RelWithDebInfo)
 endif()
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 17 CACHE STRING "C++ standard to be used")
+set(CMAKE_CXX_STANDARD_REQUIRED On)
+set(CMAKE_CXX_EXTENSIONS Off)
+
 set(CMAKE_CXX_FLAGS "-O3")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
@@ -26,6 +29,9 @@ include_directories("${MINIBUNDLE_PATH}/external/imgui/imgui/backends")
 
 include_directories("${MINIBUNDLE_PATH}/external/implot")
 include_directories("${MINIBUNDLE_PATH}/external/implot/implot")
+
+include_directories("${MINIBUNDLE_PATH}/widget/ImGuiNodes")
+include_directories("${MINIBUNDLE_PATH}/widget/ImGuiNodes/ImGuiNodes")
 
 set(MINI_BUNDLE_BUILD_PYTHON ON)
 set(MINI_BUNDLE_BUILD_CPP   OFF)
@@ -54,6 +60,7 @@ target_include_directories(mini_bundle PUBLIC src)
 # Build external libraries: this will add imgui, implot, etc
 #########################################################################
 add_subdirectory(external)
+add_subdirectory(widget)
 
 #########################################################################
 # Build python bindings

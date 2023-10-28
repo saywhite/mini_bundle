@@ -20,7 +20,7 @@ namespace ImGui
 
 		////////////////////////////////////////////////////////////////////////////////
 
-		if (ImGui::IsKeyPressed(io.KeyMap[ImGuiKey_Home]))
+		if (ImGui::IsKeyPressed(ImGuiKey_Home))
 		{
 			scroll_ = {};
 			scale_ = 1.0f;
@@ -79,14 +79,14 @@ namespace ImGui
 		const float grid = 64.0f * scale_;
 		
 		int mark_x = (int)(scroll_.x / grid);
-		for (float x = std::fmodf(scroll_.x, grid); x < size_.x; x += grid, --mark_x)
+		for (float x = std::fmod(scroll_.x, grid); x < size_.x; x += grid, --mark_x)
 		{		
 			ImColor color = mark_x % 5 ? ImColor(0.5f, 0.5f, 0.5f, 0.1f) : ImColor(1.0f, 1.0f, 1.0f, 0.1f);
 			draw_list->AddLine(ImVec2(x, 0.0f) + pos_, ImVec2(x, size_.y) + pos_, color, 0.1f);	
 		}
 			
 		int mark_y = (int)(scroll_.y / grid);
-		for (float y = std::fmodf(scroll_.y, grid); y < size_.y; y += grid, --mark_y)
+		for (float y = std::fmod(scroll_.y, grid); y < size_.y; y += grid, --mark_y)
 		{
 			ImColor color = mark_y % 5 ? ImColor(0.5f, 0.5f, 0.5f, 0.1f) : ImColor(1.0f, 1.0f, 1.0f, 0.1f);
 			draw_list->AddLine(ImVec2(0.0f, y) + pos_, ImVec2(size_.x, y) + pos_, color, 0.1f);
@@ -702,7 +702,7 @@ namespace ImGui
 
 		////////////////////////////////////////////////////////////////////////////////
 		
-		if (ImGui::IsKeyPressed(io.KeyMap[ImGuiKey_Delete]))
+		if (ImGui::IsKeyPressed(ImGuiKey_Delete))
 		{
 			ImVector<ImGuiNodesNode*> nodes;
 			nodes.reserve(nodes_.size());

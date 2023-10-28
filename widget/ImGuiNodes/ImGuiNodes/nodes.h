@@ -135,7 +135,7 @@ namespace ImGui
 				draw_list->AddCircle((pos_ * scale) + offset, (ImGuiNodesConnectorDotDiameter * 0.5f) * area_name_.GetHeight() * scale, color);
 
 			ImGui::SetCursorScreenPos((area_name_.Min * scale) + offset);
-			ImGui::Text(name_);
+			ImGui::TextUnformatted(name_);
 
 		}
 
@@ -209,7 +209,7 @@ namespace ImGui
 				draw_list->AddCircle((pos_ * scale) + offset, (ImGuiNodesConnectorDotDiameter * 0.5f) * area_name_.GetHeight() * scale, color);
 
 			ImGui::SetCursorScreenPos((area_name_.Min * scale) + offset);
-			ImGui::Text(name_);
+			ImGui::TextUnformatted(name_);
 		}
 
 		ImGuiNodesOutput(const char* name, ImGuiNodesConnectorType type)
@@ -385,11 +385,11 @@ namespace ImGui
 
 			ImGui::SetCursorScreenPos(((area_name_.Min + ImVec2(2, 2)) * scale) + offset);
 			ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 0, 0, 255));
-			ImGui::Text(name_);
+			ImGui::TextUnformatted(name_);
 			ImGui::PopStyleColor();
 
 			ImGui::SetCursorScreenPos((area_name_.Min * scale) + offset);
-			ImGui::Text(name_);
+			ImGui::TextUnformatted(name_);
 
 			if (state_ & (ImGuiNodesNodeStateFlag_Marked | ImGuiNodesNodeStateFlag_Selected))
 				draw_list->AddRectFilled(node_rect.Min, node_rect.Max, ImColor(1.0f, 1.0f, 1.0f, 0.25f), rounding, rounding_corners_flags);
@@ -450,11 +450,10 @@ namespace ImGui
 		value-initialization for non-class types and 
 		non-aggregate classes with default constructors, and 
 		aggregate initialization for aggregates).
-	*/
-	/*
-    inline ImVector()                                       { Size = Capacity = 0; Data = NULL; }
-    inline ImVector(const ImVector<T>& src)                 { Size = Capacity = 0; Data = NULL; operator=(src); }
-    inline ImVector<T>& operator=(const ImVector<T>& src)   { clear(); resize(src.Size); if (src.Data) memcpy(Data, src.Data, (size_t)Size * sizeof(T)); return *this; }
+
+    	inline ImVector()                                       { Size = Capacity = 0; Data = NULL; }
+    	inline ImVector(const ImVector<T>& src)                 { Size = Capacity = 0; Data = NULL; operator=(src); }
+    	inline ImVector<T>& operator=(const ImVector<T>& src)   { clear(); resize(src.Size); if (src.Data) memcpy(Data, src.Data, (size_t)Size * sizeof(T)); return *this; }
 	*/
 	struct ImGuiNodesNodeDesc
 	{
@@ -463,6 +462,7 @@ namespace ImGui
 		ImColor color_;
 		ImVector<ImGuiNodesConnectionDesc> inputs_;
 		ImVector<ImGuiNodesConnectionDesc> outputs_;
+		ImGuiNodesNodeDesc(const char* NodeName, ImGuiNodesNodeType NodeType, ImColor NodeColor) : name_{*NodeName}, type_(NodeType), color_(NodeColor) {}
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
