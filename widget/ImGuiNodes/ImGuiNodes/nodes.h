@@ -110,7 +110,7 @@ namespace ImGui
 		ImColor color_;
 		ImVector<ImGuiNodesConnectionDesc> inputs_;
 		ImVector<ImGuiNodesConnectionDesc> outputs_;
-		ImGuiNodesNodeDesc(char const *NodeName, ImGuiNodesNodeType NodeType, ImColor NodeColor) : name_(NodeName), type_(NodeType), color_(NodeColor) {}
+		ImGuiNodesNodeDesc(char const *NodeName, ImGuiNodesNodeType NodeType, ImColor NodeColor) : type_(NodeType), color_(NodeColor) { strcpy(name_, NodeName); }
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
