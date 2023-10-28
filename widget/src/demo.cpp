@@ -7,8 +7,6 @@
 // - Documentation        https://dearimgui.com/docs (same as your local docs/ folder).
 // - Introduction, links and more at the top of imgui.cpp
 
-#define IMGUI_DEFINE_MATH_OPERATORS
-
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -180,7 +178,7 @@ int main(int, char**)
 
         // ImGuiNodes
         static ImGui::ImGuiNodes nodes_;
-        ImGui::Begin("Nodes II");
+        ImGui::Begin("Nodes II", NULL, ImGuiWindowFlags_NoMove);
         nodes_.Update();
         nodes_.ProcessNodes();
         nodes_.ProcessContextMenu();
