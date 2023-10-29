@@ -2,8 +2,11 @@ function(add_mini_bundle_bindings)
     set(bindings_main_folder ${MINIBUNDLE_PATH}/external/bindings_generation/cpp/)
     include(${bindings_main_folder}/all_pybind_files.cmake)
 
+    set(bindings_widget_folder ${MINIBUNDLE_PATH}/widget/bindings_generation/cpp/)
+    include(${bindings_widget_folder}/all_pybind_files.cmake)
+
     #########################################################################
-    # Build python module that provides bindings to the library hello_imgui
+    # Build python module that provides bindings
     #########################################################################
     set(bound_library mini_bundle)                 # The library for which we are building bindings
     set(python_native_module_name _mini_bundle)    # This is the native python module name
