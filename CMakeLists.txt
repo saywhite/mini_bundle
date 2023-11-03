@@ -60,7 +60,7 @@ target_include_directories(mini_bundle PUBLIC src)
 # Build external libraries: this will add imgui, implot, etc
 #########################################################################
 add_subdirectory(external)
-add_subdirectory(widget)
+# add_subdirectory(widget)
 
 #########################################################################
 # Build python bindings

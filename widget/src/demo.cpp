@@ -37,49 +37,6 @@ static void glfw_error_callback(int error, const char* description)
     fprintf(stderr, "GLFW Error %d: %s\n", error, description);
 }
 
-void Demo_MarkersAndText() {
-    static float mk_size = ImPlot::GetStyle().MarkerSize;
-    static float mk_weight = ImPlot::GetStyle().MarkerWeight;
-    ImGui::DragFloat("Marker Size",&mk_size,0.1f,2.0f,10.0f,"%.2f px");
-    ImGui::DragFloat("Marker Weight", &mk_weight,0.05f,0.5f,3.0f,"%.2f px");
-
-    if (ImPlot::BeginPlot("##MarkerStyles", ImVec2(-1,0), ImPlotFlags_CanvasOnly)) {
-
-        ImPlot::SetupAxes(nullptr, nullptr, ImPlotAxisFlags_NoDecorations, ImPlotAxisFlags_NoDecorations);
-        ImPlot::SetupAxesLimits(0, 10, 0, 12);
-
-        ImS8 xs[2] = {1,4};
-        ImS8 ys[2] = {10,11};
-
-        // filled markers
-        for (int m = 0; m < ImPlotMarker_COUNT; ++m) {
-            ImGui::PushID(m);
-            ImPlot::SetNextMarkerStyle(m, mk_size, IMPLOT_AUTO_COL, mk_weight);
-            ImPlot::PlotLine("##Filled", xs, ys, 2);
-            ImGui::PopID();
-            ys[0]--; ys[1]--;
-        }
-        xs[0] = 6; xs[1] = 9; ys[0] = 10; ys[1] = 11;
-        // open markers
-        for (int m = 0; m < ImPlotMarker_COUNT; ++m) {
-            ImGui::PushID(m);
-            ImPlot::SetNextMarkerStyle(m, mk_size, ImVec4(0,0,0,0), mk_weight);
-            ImPlot::PlotLine("##Open", xs, ys, 2);
-            ImGui::PopID();
-            ys[0]--; ys[1]--;
-        }
-
-        ImPlot::PlotText("Filled Markers", 2.5f, 6.0f);
-        ImPlot::PlotText("Open Markers",   7.5f, 6.0f);
-
-        ImPlot::PushStyleColor(ImPlotCol_InlayText, ImVec4(1,0,1,1));
-        ImPlot::PlotText("Vertical Text", 5.0f, 6.0f, ImVec2(0,0), ImPlotTextFlags_Vertical);
-        ImPlot::PopStyleColor();
-
-        ImPlot::EndPlot();
-    }
-}
-
 void Demo_DragPoints() {
     ImGui::BulletText("Click and drag each point.");
     static ImPlotDragToolFlags flags = ImPlotDragToolFlags_None;

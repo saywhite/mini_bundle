@@ -53,23 +53,23 @@ target_sources(mini_bundle PRIVATE
 ####################################################
 # DEMO
 ####################################################
-# add_executable(imgui_demo src/demo.cpp)
-# 
-# target_include_directories(imgui_demo
-#                            PUBLIC ${imgui_dir} 
-#                            PUBLIC ${imgui_backends_dir} 
-#                            PUBLIC ${glfw_dir}
-#                            PUBLIC ${implot_dir} ) 
-# 
-# target_link_libraries(imgui_demo
-#                       PUBLIC OpenGL::GL
-#                       PUBLIC imgui 
-#                       PUBLIC glfw 
-#                       PUBLIC implot)
-# 
-# target_sources(imgui_demo PRIVATE
-#                       ${imgui_backends_dir}/imgui_impl_opengl3.h
-#                       ${imgui_backends_dir}/imgui_impl_opengl3.cpp
-#                       ${imgui_backends_dir}/imgui_impl_glfw.h
-#                       ${imgui_backends_dir}/imgui_impl_glfw.cpp
-#                       )
+add_executable(imgui_demo src/demo.cpp)
+
+target_include_directories(imgui_demo
+                           PUBLIC ${imgui_dir} 
+                           PUBLIC ${imgui_backends_dir} 
+                           PUBLIC ${glfw_dir}
+                           PUBLIC ${implot_dir} ) 
+
+target_link_libraries(imgui_demo
+                      PUBLIC OpenGL::GL
+                      PUBLIC imgui 
+                      PUBLIC glfw 
+                      PUBLIC implot)
+
+target_sources(imgui_demo PRIVATE
+                      ${imgui_backends_dir}/imgui_impl_opengl3.h
+                      ${imgui_backends_dir}/imgui_impl_opengl3.cpp
+                      ${imgui_backends_dir}/imgui_impl_glfw.h
+                      ${imgui_backends_dir}/imgui_impl_glfw.cpp
+                      )

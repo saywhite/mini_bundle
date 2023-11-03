@@ -36,6 +36,47 @@ static void glfw_error_callback(int error, const char* description)
     fprintf(stderr, "GLFW Error %d: %s\n", error, description);
 }
 
+void Demo_DragPoints() {
+    ImGui::BulletText("Click and drag each point.");
+    static ImPlotDragToolFlags flags = ImPlotDragToolFlags_None;
+    ImGui::CheckboxFlags("NoCursors", (unsigned int*)&flags, ImPlotDragToolFlags_NoCursors); ImGui::SameLine();
+    ImGui::CheckboxFlags("NoFit", (unsigned int*)&flags, ImPlotDragToolFlags_NoFit); ImGui::SameLine();
+    ImGui::CheckboxFlags("NoInput", (unsigned int*)&flags, ImPlotDragToolFlags_NoInputs);
+    ImPlotAxisFlags ax_flags = ImPlotAxisFlags_NoTickLabels | ImPlotAxisFlags_NoTickMarks;
+    bool clicked[4] = {false, false, false, false};
+    bool hovered[4] = {false, false, false, false};
+    bool held[4]    = {false, false, false, false};
+    if (ImPlot::BeginPlot("##Bezier",ImVec2(-1,0),ImPlotFlags_CanvasOnly)) {
+        ImPlot::SetupAxes(nullptr,nullptr,ax_flags,ax_flags);
+        ImPlot::SetupAxesLimits(0,1,0,1);
+        static ImPlotPoint P[] = {ImPlotPoint(.05f,.05f), ImPlotPoint(0.2,0.4),  ImPlotPoint(0.8,0.6),  ImPlotPoint(.95f,.95f)};
+
+        ImPlot::DragPoint(0,&P[0].x,&P[0].y, ImVec4(0,0.9f,0,1),4,flags, &clicked[0], &hovered[0], &held[0]);
+        ImPlot::DragPoint(1,&P[1].x,&P[1].y, ImVec4(1,0.5f,1,1),4,flags, &clicked[1], &hovered[1], &held[1]);
+        ImPlot::DragPoint(2,&P[2].x,&P[2].y, ImVec4(0,0.5f,1,1),4,flags, &clicked[2], &hovered[2], &held[2]);
+        ImPlot::DragPoint(3,&P[3].x,&P[3].y, ImVec4(0,0.9f,0,1),4,flags, &clicked[3], &hovered[3], &held[3]);
+
+        static ImPlotPoint B[100];
+        for (int i = 0; i < 100; ++i) {
+            double t  = i / 99.0;
+            double u  = 1 - t;
+            double w1 = u*u*u;
+            double w2 = 3*u*u*t;
+            double w3 = 3*u*t*t;
+            double w4 = t*t*t;
+            B[i] = ImPlotPoint(w1*P[0].x + w2*P[1].x + w3*P[2].x + w4*P[3].x, w1*P[0].y + w2*P[1].y + w3*P[2].y + w4*P[3].y);
+        }
+
+        ImPlot::SetNextLineStyle(ImVec4(1,0.5f,1,1),hovered[1]||held[1] ? 2.0f : 1.0f);
+        ImPlot::PlotLine("##h1",&P[0].x, &P[0].y, 2, 0, 0, sizeof(ImPlotPoint));
+        ImPlot::SetNextLineStyle(ImVec4(0,0.5f,1,1), hovered[2]||held[2] ? 2.0f : 1.0f);
+        ImPlot::PlotLine("##h2",&P[2].x, &P[2].y, 2, 0, 0, sizeof(ImPlotPoint));
+        ImPlot::SetNextLineStyle(ImVec4(0,0.9f,0,1), hovered[0]||held[0]||hovered[3]||held[3] ? 3.0f : 2.0f);
+        ImPlot::PlotLine("##bez",&B[0].x, &B[0].y, 100, 0, 0, sizeof(ImPlotPoint));
+        ImPlot::EndPlot();
+    }
+}
+
 // Main code
 int main(int, char**)
 {
@@ -174,6 +215,11 @@ int main(int, char**)
 
         // ImPlot
         ImPlot::ShowDemoWindow();
+
+        static float mk_size = ImPlot::GetStyle().MarkerSize;
+        static float mk_weight = ImPlot::GetStyle().MarkerWeight;
+        ImPlot::SetNextMarkerStyle(ImPlotMarker_Diamond, mk_size, ImVec4(0,0,0,0), mk_weight);
+        Demo_DragPoints();
 
         // Rendering
         ImGui::Render();
