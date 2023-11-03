@@ -218,7 +218,7 @@ int main(int, char**)
 
         static float mk_size = ImPlot::GetStyle().MarkerSize;
         static float mk_weight = ImPlot::GetStyle().MarkerWeight;
-        ImPlot::SetNextMarkerStyle(ImPlotMarker_Diamond, mk_size, ImVec4(0,0,0,0), mk_weight);
+        // ImPlot::SetNextMarkerStyle(ImPlotMarker_Diamond, mk_size, ImVec4(0,0,0,0), mk_weight);
         Demo_DragPoints();
 
         // Rendering
