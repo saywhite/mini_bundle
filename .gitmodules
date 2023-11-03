@@ -4,7 +4,7 @@
 	branch = 3.3-stable
 [submodule "external/implot/implot"]
 	path = external/implot/implot
-	url = https://github.com/epezent/implot.git
+	url = https://github.com/saywhite/implot.git
 	branch = master
 [submodule "external/imgui/imgui"]
 	path = external/imgui/imgui
