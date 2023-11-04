@@ -10,3 +10,7 @@
 	path = external/imgui/imgui
 	url = https://github.com/saywhite/imgui.git
 	branch = docking
+[submodule "fonts"]
+	path = fonts
+	url = https://github.com/powerline/fonts.git
+	branch = master
